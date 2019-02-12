@@ -11,6 +11,7 @@ class PaypalButton extends React.Component {
         this.state = {
             showButton: false
         }
+        this.button = null;
     }
 
     componentWillReceiveProps ({ isScriptLoaded, isScriptLoadSucceed }) {
@@ -67,6 +68,7 @@ class PaypalButton extends React.Component {
         let ppbtn = '';
         if (this.state.showButton) {
             ppbtn = <paypal.Button.react
+                ref={button => this.button = button}
                 env={this.props.env}
                 client={this.props.client}
                 style={this.props.style}
@@ -74,14 +76,13 @@ class PaypalButton extends React.Component {
                 commit={true}
                 onAuthorize={onAuthorize}
                 onCancel={this.props.onCancel}
-
                 // "Error: Unrecognized prop: shipping" was caused by the next line
                 // shipping={this.props.shipping}
             />
         }
         const { Container } = this.props;
         if(Container) {
-            return <Container>{ppbtn}</Container>
+            return <Container onClick={() => this.button.click()}>{ppbtn}</Container>
         }
         return <div>{ppbtn}</div>;
     }
@@ -92,7 +93,6 @@ PaypalButton.propTypes = {
     total: PropTypes.number.isRequired,
     client: PropTypes.object.isRequired,
     style: PropTypes.object,
-    Container: Pro
 }
 
 PaypalButton.defaultProps = {
