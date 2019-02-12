@@ -79,6 +79,10 @@ class PaypalButton extends React.Component {
                 // shipping={this.props.shipping}
             />
         }
+        const { Container } = this.props;
+        if(Container) {
+            return <Container>{ppbtn}</Container>
+        }
         return <div>{ppbtn}</div>;
     }
 }
@@ -87,7 +91,8 @@ PaypalButton.propTypes = {
     currency: PropTypes.string.isRequired,
     total: PropTypes.number.isRequired,
     client: PropTypes.object.isRequired,
-    style: PropTypes.object
+    style: PropTypes.object,
+    Container: Pro
 }
 
 PaypalButton.defaultProps = {
